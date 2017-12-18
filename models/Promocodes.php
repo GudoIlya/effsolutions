@@ -68,7 +68,7 @@ class Promocodes extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getCity()
-    {
+    {   
         return $this->hasOne(Cities::className(), ['id' => 'city_id']);
     }
 

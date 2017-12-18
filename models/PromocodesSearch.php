@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Promocodes;
 
+
 /**
  * PromocodesSearch represents the model behind the search form about `app\models\Promocodes`.
  */
@@ -43,8 +44,8 @@ class PromocodesSearch extends Promocodes
     public function search($params)
     {
         $query = Promocodes::find()
-                ->select('promocodes.*, cities.city_name as city_name')
-                ->leftJoin('cities', 'cities.id=promocodes.city_id');
+                ->select(['promocodes.*', 'cities.city_name as city_name'])
+                ->joinWith('city');
 
         // add conditions that should always apply here
 

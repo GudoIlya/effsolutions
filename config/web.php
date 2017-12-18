@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$modules = require __DIR__.'/modules.php';
 
 $config = [
     'id' => 'basic',
@@ -15,6 +16,9 @@ $config = [
     'components' => [
         'request' => [
             'cookieValidationKey' => 'somevalidationkey123321',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser'
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -48,11 +52,12 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/promocode'],
             ],
         ],
-        
     ],
     'params' => $params,
+    'modules' => $modules,
 ];
 
 if (YII_ENV_DEV) {

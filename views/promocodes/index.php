@@ -29,7 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'begin_date',
             'end_date',
             'compensation',
-            'city_id',
+            [
+                'attribute'=>'city_id',
+                'value'=>'city.city_name',
+            ],
             'status',
             //'promocode',            
 
