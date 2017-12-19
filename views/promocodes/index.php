@@ -42,10 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
             //'promocode',            
 
             ['class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete} {link}',
+                'template' => '{view} {update} {delete} {link} {activate}',
                 'buttons' => [
-                    'link' => function($url, $model, $key){
-                        return Html::a('Инфо', ['api/promocode/get-discount-info', 'promocode_name' => $model->promocode]);
+                    'link' => function($url, $model, $key) {
+                        return Html::a('Инфо', ['api/promocode/get-discount-info', 'promocode_name' => $model->promocode, 'token' => Yii::$app->getRequest()->getCsrfToken()]);
+                    },
+                    'activate' => function($url, $model, $key) {
+                        return Html::a('Активировать', ['api/promocode/activate-discount', 'promocode_name' => $model->promocode,'city_id' => $model->city_id, 'token' => Yii::$app->getRequest()->getCsrfToken()]);
                     }
                 ]
             ],

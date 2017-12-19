@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 
+
 /**
  * This is the model class for table "promocodes".
  *
@@ -86,4 +87,5 @@ class Promocodes extends \yii\db\ActiveRecord
         $this->end_date = Yii::$app->formatter->asDatetime($this->end_date, 'php:Y-m-d');
         return true;
     }
+
 }

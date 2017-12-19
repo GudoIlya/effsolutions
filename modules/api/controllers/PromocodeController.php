@@ -4,7 +4,7 @@ namespace app\modules\api\controllers;
 
 use yii\rest\ActiveController;
 use yii\filters\ContentNegotiator;
-use app\models\Promocodes;
+use app\models\PromocodesSearch;
 use yii\web\Response;
 use Yii;
 
@@ -37,27 +37,12 @@ class PromocodeController extends ActiveController {
         return $behaviors;
     }
 
-    //public function actionGetDiscountInfo($token) {
-    public function actionGetDiscountInfo() {
-    	//if (!$token) {
-          //  Yii::$app->response->statusCode(401);
-        //}
+    public function actionGetDiscountInfo($token) {
+    	
 
         $promocode_name = Yii::$app->request->get('promocode_name');
         if ($promocode_name) {
-            $promocode = Promocodes::find()
-                ->select([ 'promocodes.begin_date', 
-                           'promocodes.end_date',
-                           'promocodes.compensation',
-                           'c.id as city_id',
-                           'c.city_name as zone',
-                           'promocodes.status'])
-                ->joinWith('city as c')     
-                ->where([
-                    'promocodes.promocode' => $promocode_name
-                ])
-                ->one();
-                //https://habrahabr.ru/post/318242/ must read
+            $promocode = PromocodesSearch::getPromocodeInfo($promocode_name);
             return $promocode;
         }
 
@@ -65,6 +50,31 @@ class PromocodeController extends ActiveController {
             'error' => 'Необходимо ввести название промокода'
         ];
 
+    }
+
+    /**
+    * Активирует для клиента промокод в определенной зоне
+    * @var $token - csrf token
+    * @return $compensation - вознаграждение клиента
+    */
+    public function actionActivateDiscount($token) {
+
+        if (!$token) {
+            Yii::$app->response->statusCode(401);
+        }
+
+        $errors = (null !== Yii::$app->request->get('promocode_name') AND Yii::$app->request->get('promocode_name')!='') ? '': 'Не указан промокод';
+        $errors .= (null !== Yii::$app->request->get('city_id') AND Yii::$app->request->get('city_id') !='') ? '' : 'Не указана тарифная зона';
+
+        if(strlen($errors) > 0){
+            return [
+                'error' => $errors
+            ];
+        }
+        
+        $compensation = PromocodesSearch::activateDiscount();
+
+        return $compensation;
     }
 }
 
