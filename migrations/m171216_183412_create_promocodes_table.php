@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `promocodes`.
  */
-class m171216_183413_create_promocodes_table extends Migration
+class m171216_183412_create_promocodes_table extends Migration
 {
     /**
      * @inheritdoc
