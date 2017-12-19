@@ -58,6 +58,7 @@ $config = [
     ],
     'params' => $params,
     'modules' => $modules,
+    'defaultRoute' => 'promocodes/index'
 ];
 
 if (YII_ENV_DEV) {
