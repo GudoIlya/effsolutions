@@ -1,13 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PromocodesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Promocodes';
+$this->title = 'Промокоды';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="promocodes-index">
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Promocodes', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать промокод', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -33,10 +34,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'city_id',
                 'value'=>'city.city_name',
             ],
-            'status',
+            [
+                'attribute' => 'status',
+                
+            ],
+            //'status',
             //'promocode',            
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete} {link}',
+                'buttons' => [
+                    'link' => function($url, $model, $key){
+                        return Html::a('Инфо', ['api/promocode/get-discount-info', 'promocode_name' => $model->promocode]);
+                    }
+                ]
             ],
+        ],
     ]); ?>
 </div>

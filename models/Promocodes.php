@@ -59,7 +59,7 @@ class Promocodes extends \yii\db\ActiveRecord
             'end_date' => 'Окончание действия',
             'city_id' => 'Зона действия',
             'promocode' => 'Название промокода',
-            'status' => 'Status',
+            'status' => 'Активность',
             'compensation' => 'Величина компенсации',
         ];
     }

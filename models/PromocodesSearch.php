@@ -43,8 +43,12 @@ class PromocodesSearch extends Promocodes
      */
     public function search($params)
     {
+
+        $statusExpression = new \yii\db\Expression("CASE promocodes.status WHEN  1 then 'Активен' ELSE 'Не активен' END");
         $query = Promocodes::find()
-                ->select(['promocodes.*', 'cities.city_name as city_name'])
+                ->select(['promocodes.*', 
+                'st' => $statusExpression,
+                'cities.city_name as city_name'])
                 ->joinWith('city');
 
         // add conditions that should always apply here

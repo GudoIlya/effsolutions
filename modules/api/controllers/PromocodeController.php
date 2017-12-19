@@ -20,6 +20,9 @@ class PromocodeController extends ActiveController {
             'formats' => [
                 'application/json' => Response::FORMAT_JSON,
             ],
+            'languages' => [
+                'ru'
+            ]
         ];
 
         $behaviors['corsFilter'] = [
@@ -34,11 +37,11 @@ class PromocodeController extends ActiveController {
         return $behaviors;
     }
 
-    public function actionGetDiscountInfo($token) {
-
-    	if (!$token) {
-            Yii::$app->response->statusCode(401);
-        }
+    //public function actionGetDiscountInfo($token) {
+    public function actionGetDiscountInfo() {
+    	//if (!$token) {
+          //  Yii::$app->response->statusCode(401);
+        //}
 
         $promocode_name = Yii::$app->request->get('promocode_name');
         if ($promocode_name) {
@@ -46,14 +49,14 @@ class PromocodeController extends ActiveController {
                 ->select([ 'promocodes.begin_date', 
                            'promocodes.end_date',
                            'promocodes.compensation',
-                           'cities.city_name as zone',
+                           'c.id as city_id',
+                           'c.city_name as zone',
                            'promocodes.status'])
-                ->joinWith('city')
+                ->joinWith('city as c')     
                 ->where([
                     'promocodes.promocode' => $promocode_name
                 ])
                 ->one();
-                var_dump($promocode);die();
                 //https://habrahabr.ru/post/318242/ must read
             return $promocode;
         }
